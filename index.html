@@ -1,0 +1,305 @@
+# Birthday-Wish<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for My Madam</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; user-select: none; }
+
+        body {
+            background: linear-gradient(-45deg, #ffb6c1, #ff69b4, #ffc0cb, #ff1493);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #app-container {
+            position: relative; width: 90%; max-width: 500px; height: 85vh;
+            background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(15px);
+            border-radius: 40px; border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column; align-items: center;
+            padding: 20px; z-index: 10;
+        }
+
+        #cat-wrapper { position: relative; width: 180px; height: 180px; margin-top: 20px; transition: all 0.5s ease; }
+        #cat-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s; }
+        #boxing-glove { position: absolute; width: 80px; top: 40%; left: 50%; transform: scale(0); transition: 0.3s; z-index: 50; }
+
+        .cat-breathe { animation: breathe 3s infinite; }
+        .cat-jump { animation: jump 0.5s infinite; }
+        .cat-shame { transform: rotate(15deg) translateX(10px); filter: sepia(0.3) hue-rotate(-30deg); }
+        
+        @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes jump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes punch-anim { 0% { transform: scale(0) translateX(0); } 50% { transform: scale(3) translateX(-50px); } 100% { transform: scale(1) translateX(0); } }
+
+        #dialogue {
+            background: white; color: #ff1493; padding: 15px; border-radius: 20px;
+            font-size: 16px; font-weight: 600; text-align: center;
+            margin: 20px 0; width: 90%; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            min-height: 60px;
+        }
+
+        .btn-container { margin-top: auto; padding-bottom: 20px; display: flex; gap: 10px; }
+        .btn {
+            background: #ff1493; color: white; border: none; padding: 12px 25px;
+            border-radius: 25px; cursor: pointer; font-weight: 600;
+            box-shadow: 0 5px 15px rgba(255,20,147,0.3); transition: 0.3s;
+        }
+        .btn:hover { transform: scale(1.05); }
+
+        #gift-building { position: absolute; bottom: 100px; display: none; flex-wrap: wrap; justify-content: center; width: 300px; gap: 5px; }
+        .building-box { width: 60px; transition: 0.5s; }
+
+        /* Cake Splitting Animation */
+        #cake-container { display: none; cursor: pointer; position: relative; width: 250px; height: 200px; }
+        .cake-half { 
+            width: 250px; position: absolute; 
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+            transition: transform 0.8s ease-in-out; 
+        }
+        .cut-left { clip-path: inset(0 50% 0 0); }
+        .cut-right { clip-path: inset(0 0 0 50%); }
+        .split-left { transform: translateX(-40px) rotate(-10deg); }
+        .split-right { transform: translateX(40px) rotate(10deg); }
+
+        .cake-text {
+            position: absolute; top: 68%; left: 50%; transform: translate(-50%, -50%);
+            color: #fdfdfd; font-family: 'Dancing Script', cursive;
+            font-size: 16px; font-weight: bold; text-shadow: 1px 1px 2px #4e2a00;
+            background: rgba(78, 42, 0, 0.4); padding: 4px 15px; border-radius: 50px;
+            white-space: nowrap; z-index: 10; pointer-events: none; transition: opacity 0.3s;
+        }
+
+        .particle { position: absolute; pointer-events: none; z-index: 100; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+        @keyframes rise { to { transform: translateY(-100vh) rotate(-360deg); } }
+
+        #letter {
+            display: none; background: #fffdf0; padding: 15px; border-radius: 10px;
+            font-family: 'Dancing Script', cursive; font-size: 18px; line-height: 1.4;
+            max-height: 250px; overflow-y: auto; margin: 10px;
+        }
+        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 40% { transform: translate(3px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
+    </style>
+</head>
+<body>
+
+    <div style="position:absolute; left:-9999px;"><div id="player"></div></div>
+
+    <div id="app-container">
+        <div id="cat-wrapper">
+            <img id="cat-img" src="cat.png" class="cat-breathe">
+            <img id="boxing-glove" src="https://cdn-icons-png.flaticon.com/512/1162/1162703.png"> 
+        </div>
+
+        <div id="dialogue">Assalam-o-Alaikum! I have a surprise for you...</div>
+
+        <div id="gift-building">
+            <img class="building-box" src="gifts.png"><img class="building-box" src="gifts.png">
+            <img class="building-box" src="gifts.png"><img class="building-box" src="gifts.png">
+            <img class="building-box" src="gifts.png">
+        </div>
+
+        <div id="cake-container" onclick="cutCake()">
+            <img class="cake-half cut-left" src="cake.png">
+            <img class="cake-half cut-right" src="cake.png">
+            <div class="cake-text"></div>
+        </div>
+
+        <div id="letter">
+            Happy Birthday, Madam Jii! 🎂<br><br>
+            On 27th April, the world became a little brighter because you arrived. Three years of knowing you, and I still can't figure out whether your sense of humor or your wisdom is sharper. You are the kind of friend who makes silence comfortable and laughter unforgettable. May this year bring you success in your studies and peace in your heart. I wish we remain friends till jannah. Keep shining!
+        </div>
+
+        <div id="counter-box" style="display:none; color:white; font-size:20px; font-weight:bold; text-align:center;"></div>
+
+        <div class="btn-container">
+            <button id="btn-next" class="btn" onclick="nextStep()">Start Experience</button>
+            <button id="btn-no" class="btn" style="display:none;">No</button>
+        </div>
+    </div>
+
+    <script>
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0', videoId: 'sL8-vrfTR7k',
+                events: { 'onReady': onPlayerReady }
+            });
+        }
+        function onPlayerReady(event) { console.log("Music Ready"); }
+
+        let step = 0;
+        const dialogue = document.getElementById('dialogue');
+        const cat = document.getElementById('cat-img');
+        const catWrap = document.getElementById('cat-wrapper');
+        const btnNext = document.getElementById('btn-next');
+        const btnNo = document.getElementById('btn-no');
+
+        function nextStep() {
+            step++;
+            if(step === 1) {
+                player.playVideo();
+                dialogue.innerText = "Are you my Madam Jii? 👈";
+                btnNext.innerText = "Yes, it's me!";
+            }
+            else if(step === 2) {
+                dialogue.innerText = "Yayy! Let's see how long we've been friends...";
+                btnNext.style.display = "none";
+                const cBox = document.getElementById('counter-box');
+                cBox.style.display = "block";
+                let days = 1291; let dCount = 0;
+                let timer = setInterval(() => {
+                    dCount += 10;
+                    cBox.innerHTML = `<div>Days: ${dCount}</div>`;
+                    if(dCount >= days) {
+                        clearInterval(timer);
+                        cBox.innerHTML = `<div>Days: 1,291</div><div>Hours: 30,984</div><div>Minutes: 1,859,070</div>`;
+                        btnNext.style.display = "block";
+                        btnNext.innerText = "That's a long time!";
+                    }
+                }, 20);
+            }
+            else if(step === 3) {
+                document.getElementById('counter-box').style.display = "none";
+                dialogue.innerText = "Wait... my human says you are 'Afraid Women'... is it true? 😂";
+                btnNext.innerText = "Yes";
+                btnNo.style.display = "block";
+                btnNo.onmouseover = () => {
+                    btnNo.style.position = "absolute";
+                    btnNo.style.left = Math.random() * 80 + "%";
+                    btnNo.style.top = Math.random() * 80 + "%";
+                    cat.classList.add('cat-jump');
+                };
+            }
+            else if(step === 4) {
+                btnNo.style.display = "none";
+                btnNext.style.display = "none";
+                cat.classList.remove('cat-jump');
+                dialogue.innerText = "I have a special chocolate cake for you! Click to cut it.";
+                document.getElementById('cake-container').style.display = "block";
+                
+                // Balloons and Confetti trigger when cake APPEARS
+                spawnParticles('🎉', 300, 4000, 'fall');
+                spawnParticles(['🎈','🔴','🔵','🟢','🟡','🟣','🟤'], 200, 5000, 'rise');
+            }
+        }
+
+        function cutCake() {
+            // Split the cake pieces
+            document.querySelector('.cut-left').classList.add('split-left');
+            document.querySelector('.cut-right').classList.add('split-right');
+            document.querySelector('.cake-text').style.opacity = "0"; // Hide name on cut
+
+            dialogue.innerHTML = "Happy Birthday Madam Jeeh! 🎂🎉";
+
+            setTimeout(() => {
+                document.getElementById('cake-container').style.display = "none";
+                showGifts();
+            }, 3000);
+        }
+
+        function spawnParticles(chars, count, duration, dir) {
+            for(let i=0; i<count; i++) {
+                setTimeout(() => {
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    p.innerText = Array.isArray(chars) ? chars[Math.floor(Math.random()*chars.length)] : chars;
+                    p.style.left = Math.random() * 100 + "vw";
+                    p.style.top = dir === 'fall' ? "-5vh" : "105vh";
+                    p.style.fontSize = (Math.random() * 20 + 20) + "px";
+                    p.style.animation = `${dir} ${Math.random()*2 + 2}s linear forwards`;
+                    document.body.appendChild(p);
+                    setTimeout(() => p.remove(), 4000);
+                }, Math.random() * duration);
+            }
+        }
+
+        let giftIdx = 0;
+        function showGifts() {
+            const giftBuilding = document.getElementById('gift-building');
+            giftBuilding.style.display = "flex";
+            btnNext.style.display = "block";
+            btnNext.innerText = "Open Next Gift";
+
+            btnNext.onclick = () => {
+                giftIdx++;
+                const boxes = document.querySelectorAll('.building-box');
+                if(boxes[5-giftIdx]) boxes[5-giftIdx].style.visibility = "hidden"; 
+
+                if(giftIdx === 1) {
+                    dialogue.innerText = "Gift 1: Chocolates for you Mohtarma! 🍫🍬";
+                    spawnParticles('🍫', 100, 2000, 'fall');
+                } 
+                else if(giftIdx === 2) {
+                    dialogue.innerText = "Gift 2 is... WAIT!";
+                    const glove = document.getElementById('boxing-glove');
+                    glove.src = "glove.png"; // Aapka boxing glove image
+                    glove.style.transform = "scale(1)";
+                    setTimeout(() => {
+                        glove.style.animation = "punch-anim 0.5s forwards";
+                        document.body.style.animation = "shake 0.2s 5";
+                        dialogue.innerText = "POW! 🥊 You are afraid women! Hehehe!";
+                        cat.classList.add('cat-jump');
+                    }, 500);
+                } 
+                else if(giftIdx === 3) {
+                    giftBuilding.style.display = "none"; 
+                    document.getElementById('boxing-glove').style.display = "none";
+                    dialogue.innerText = "Gift 3: A Heartfelt Letter... 📜";
+                    document.getElementById('letter').style.display = "block";
+                    btnNext.innerText = "Close Letter & Next";
+                } 
+                else if(giftIdx === 4) {
+                    document.getElementById('letter').style.display = "none";
+                    giftBuilding.style.display = "flex"; 
+                    dialogue.innerText = "Gift 4: Sunflowers for you Mohtarma!";
+                    catWrap.classList.add('cat-shame');
+                    const bouquet = document.createElement('img');
+                    bouquet.src = "sunflower.jpg"; 
+                    bouquet.style = "width:100px; position:absolute; bottom:0; right:0; z-index:101;";
+                    catWrap.appendChild(bouquet);
+                    spawnParticles('🌻', 50, 2000, 'rise');
+                    btnNext.innerText = "Final Gift";
+                } 
+                else if(giftIdx === 5) {
+                    dialogue.innerText = "Gift 5: You'll get this one physically from my human! 🎁";
+                    btnNext.innerText = "Finish";
+                    btnNext.onclick = finale;
+                }
+            };
+        }
+
+       function finale() {
+            document.getElementById('gift-building').style.display = "none";
+            dialogue.innerHTML = "<strong>(Byeeh pookie)</strong> 🤗❤️";
+            btnNext.style.display = "none";
+            catWrap.style.transform = "scale(1.5)";
+            
+            // 3000 Colorful Hearts & Confetti
+            spawnParticles(['❤️','💖','💙','💚','💛','💜','🖤','🧡'], 1500, 10000, 'fall');
+            spawnParticles('✨', 1500, 10000, 'rise');
+        }
+    </script>
+    <style>
+        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 40% { transform: translate(3px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
+    </style>
+</body>
+</html>
