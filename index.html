@@ -1,4 +1,4 @@
-# Birthday-Wish<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -96,7 +96,9 @@
 </head>
 <body>
 
-    <div style="position:absolute; left:-9999px;"><div id="player"></div></div>
+    <audio id="bg-music" loop>
+        <source src="birthday.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="app-container">
         <div id="cat-wrapper">
@@ -120,7 +122,8 @@
 
         <div id="letter">
             Happy Birthday, Madam Jii! 🎂<br><br>
-            On 27th April, the world became a little brighter because you arrived. Three years of knowing you, and I still can't figure out whether your sense of humor or your wisdom is sharper. You are the kind of friend who makes silence comfortable and laughter unforgettable. May this year bring you success in your studies and peace in your heart. I wish we remain friends till jannah. Keep shining!
+          
+Three years of knowing you, and I still can't figure out what's better — your random wisdom or your even more random roast sessions. But here's what I know for sure: you are rare. You are the kind of person who makes ordinary days feel like a celebration and silence feel completely safe. On your birthday, I don't just wish you cake and candles — I wish you more laughter than your heart can hold, more peace than your soul has ever known, and a year so beautiful that it becomes your favorite chapter yet. Keep being the Madam Jii who walks in her own style, speaks her own mind, and somehow makes everyone around her feel seen. May your dreams find you, may your smile never fade, and may this year bring you everything you didn't even know you were waiting for. Enjoy your day — you've earned every bit of happiness coming your way. ✨
         </div>
 
         <div id="counter-box" style="display:none; color:white; font-size:20px; font-weight:bold; text-align:center;"></div>
@@ -132,31 +135,19 @@
     </div>
 
     <script>
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0', width: '0', videoId: 'sL8-vrfTR7k',
-                events: { 'onReady': onPlayerReady }
-            });
-        }
-        function onPlayerReady(event) { console.log("Music Ready"); }
-
         let step = 0;
         const dialogue = document.getElementById('dialogue');
         const cat = document.getElementById('cat-img');
         const catWrap = document.getElementById('cat-wrapper');
         const btnNext = document.getElementById('btn-next');
         const btnNo = document.getElementById('btn-no');
+        const music = document.getElementById('bg-music'); // Music variable
 
         function nextStep() {
             step++;
             if(step === 1) {
-                player.playVideo();
+                // Music starts here
+                music.play().catch(e => console.log("Music play failed - need user click"));
                 dialogue.innerText = "Are you my Madam Jii? 👈";
                 btnNext.innerText = "Yes, it's me!";
             }
@@ -198,7 +189,7 @@
                 
                 // Balloons and Confetti trigger when cake APPEARS
                 spawnParticles('🎉', 300, 4000, 'fall');
-                spawnParticles(['🎈','🔴','🔵','🟢','🟡','🟣','🟤'], 200, 5000, 'rise');
+                spawnParticles(['🎈','🟤','🔵','🟢','🟡','🟣','🎈'], 200, 5000, 'rise');
             }
         }
 
@@ -206,7 +197,7 @@
             // Split the cake pieces
             document.querySelector('.cut-left').classList.add('split-left');
             document.querySelector('.cut-right').classList.add('split-right');
-            document.querySelector('.cake-text').style.opacity = "0"; // Hide name on cut
+            document.querySelector('.cake-text').style.opacity = "0"; 
 
             dialogue.innerHTML = "Happy Birthday Madam Jeeh! 🎂🎉";
 
@@ -251,7 +242,6 @@
                 else if(giftIdx === 2) {
                     dialogue.innerText = "Gift 2 is... WAIT!";
                     const glove = document.getElementById('boxing-glove');
-                    glove.src = "glove.png"; // Aapka boxing glove image
                     glove.style.transform = "scale(1)";
                     setTimeout(() => {
                         glove.style.animation = "punch-anim 0.5s forwards";
@@ -288,18 +278,14 @@
         }
 
        function finale() {
-            document.getElementById('gift-building').style.display = "none";
-            dialogue.innerHTML = "<strong>(Byeeh pookie)</strong> 🤗❤️";
-            btnNext.style.display = "none";
-            catWrap.style.transform = "scale(1.5)";
-            
-            // 3000 Colorful Hearts & Confetti
-            spawnParticles(['❤️','💖','💙','💚','💛','💜','🖤','🧡'], 1500, 10000, 'fall');
-            spawnParticles('✨', 1500, 10000, 'rise');
-        }
-    </script>
-    <style>
-        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 40% { transform: translate(3px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
-    </style>
+            document.getElementById('gift-building').style.display = "none";
+            dialogue.innerHTML = "<strong>(Byeeh pookie)</strong> 🤗❤️";
+            btnNext.style.display = "none";
+            catWrap.style.transform = "scale(1.5)";
+            
+            spawnParticles(['❤️','💖','💙','💚','💛','💜','🖤','🧡'], 1500, 10000, 'fall');
+            spawnParticles('✨', 1500, 10000, 'rise');
+        }
+    </script>
 </body>
 </html>
