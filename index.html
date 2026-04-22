@@ -239,19 +239,21 @@ Three years of knowing you, and I still can't figure out what's better — your 
                     dialogue.innerText = "Gift 1: Chocolates for you Mohtarma! 🍫🍬";
                     spawnParticles('🍫', 100, 2000, 'fall');
                 } 
-                else if(giftIdx === 2) {
-                    dialogue.innerText = "Gift 2 is... WAIT!";
-                    const glove = document.getElementById('boxing-glove');
-                    glove.src = "glove.png";
-                    glove.style.transform = "scale(1)";
-                    setTimeout(() => {
-                        glove.style.animation = "punch-anim 0.5s forwards";
-                        document.body.style.animation = "shake 0.2s 5";
-                        dialogue.innerText = "POW! 🥊 You are afraid women! Hehehe!";
-                        cat.classList.add('cat-jump');
-                    }, 500);
-                } 
-                else if(giftIdx === 3) {
+               else if(giftIdx === 2) {
+    dialogue.innerText = "Gift 2 is... WAIT!";
+    const glove = document.getElementById('boxing-glove');
+    
+    glove.style.display = "block"; // Ye line pakka karegi ke image gayab na ho
+    glove.src = "glove.png";       // Aapki file ka naam
+    glove.style.transform = "scale(1)"; 
+    
+    setTimeout(() => {
+        glove.style.animation = "punch-anim 0.5s forwards";
+        document.body.style.animation = "shake 0.2s 5";
+        dialogue.innerText = "POW! 🥊 You are afraid women! Hehehe!";
+        cat.classList.add('cat-jump');
+    }, 500);
+}                else if(giftIdx === 3) {
                     giftBuilding.style.display = "none"; 
                     document.getElementById('boxing-glove').style.display = "none";
                     dialogue.innerText = "Gift 3: A Heartfelt Letter... 📜";
